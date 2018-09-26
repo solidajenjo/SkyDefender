@@ -5,69 +5,98 @@
 
 #define GRID_SIZE 200
 #define CELL_SIZE 20.f
-#define DIRECTION_AMOUNT 52
+#define DIRECTION_AMOUNT 78
 
-FVector DIRECTIONS[DIRECTION_AMOUNT] = { { -1, -1, -1 },
-{ -1, -1, 1 },
-{ -1, 1, -1 },
-{ 1, -1, -1 },
-{ 1, 1, -1 },
-{ 1, 1, 1 },
-{ -1, -1, 0 },
-{ -1, 0, -1 },
-{ -1, 0, 0 },
-{ -1, 0, 1 },
-{ -1, 1, 0 },
-{ -1, 1, 1 },
-{ 0, -1, -1 },
-{ 0, -1, 1 },
-{ 0, 1, -1 },
-{ 0, 1, 1 },
-{ 1, -1, 0 },
-{ 1, -1, 1 },
-{ 1, 0, -1 },
-{ 1, 0, 1 },
-{ 1, 1, 0 },
-{ 1, 0, 0 },
-{ 0, 1, 0 },
-{ 0, 0, 1 },
-{ 0, 0, -1 },
-{ 0, -1, 0 },
-{16,16,16},
-{16,16,0},
-{16,16,-16},
-{16,0,16},
-{16,0,0},
-{16,0,-16},
-{16,-16,16},
-{16,-16,0},
-{16,-16,-16},
-{0,16,16},
-{0,16,0},
-{0,16,-16},
-{0,0,16},
-{0,0,-16},
-{0,-16,16},
-{0,-16,0},
-{0,-16,-16},
-{-16,16,16},
-{-16,16,0},
-{-16,16,-16},
-{-16,0,16},
-{-16,0,0},
-{-16,0,-16},
-{-16,-16,16},
-{-16,-16,0},
-{-16,-16,-16}
+FIntVector4 DIRECTIONS[DIRECTION_AMOUNT] = {
+{ -1, -1, -1, 0 },
+{ -1, -1, 1, 0 },
+{ -1, 1, -1, 0 },
+{ 1, -1, -1, 0 },
+{ 1, 1, -1, 0 },
+{ 1, 1, 1, 0 },
+{ -1, -1, 0, 0 },
+{ -1, 0, -1, 0 },
+{ -1, 0, 0, 0 },
+{ -1, 0, 1, 0 },
+{ -1, 1, 0, 0 },
+{ -1, 1, 1, 0 },
+{ 0, -1, -1, 0 },
+{ 0, -1, 1, 0 },
+{ 0, 1, -1, 0 },
+{ 0, 1, 1, 0 },
+{ 1, -1, 0, 0 },
+{ 1, -1, 1, 0 },
+{ 1, 0, -1, 0 },
+{ 1, 0, 1, 0 },
+{ 1, 1, 0, 0 },
+{ 1, 0, 0, 0 },
+{ 0, 1, 0, 0 },
+{ 0, 0, 1, 0 },
+{ 0, 0, -1, 0 },
+{ 0, -1, 0, 0 },
+{16,16,16, 0 },
+{16,16,0, 0 },
+{16,16,-16, 0 },
+{16,0,16, 0 },
+{16,0,0, 0 },
+{16,0,-16, 0 },
+{16,-16,16, 0 },
+{16,-16,0, 0 },
+{16,-16,-16, 0 },
+{0,16,16, 0 },
+{0,16,0, 0 },
+{0,16,-16, 0 },
+{0,0,16, 0 },
+{0,0,-16, 0 },
+{0,-16,16, 0 },
+{0,-16,0, 0 },
+{0,-16,-16, 0 },
+{-16,16,16, 0 },
+{-16,16,0, 0 },
+{-16,16,-16, 0 },
+{-16,0,16, 0 },
+{-16,0,0, 0 },
+{-16,0,-16, 0 },
+{-16,-16,16, 0 },
+{-16,-16,0, 0 },
+{-16,-16,-16, 0 },
+{32,32,32, 0 },
+{32,32,0, 0 },
+{32,32,-32, 0 },
+{32,0,32, 0 },
+{32,0,0, 0 },
+{32,0,-32, 0 },
+{32,-32,32, 0 },
+{32,-32,0, 0 },
+{32,-32,-32, 0 },
+{0,32,32, 0 },
+{0,32,0, 0 },
+{0,32,-32, 0 },
+{0,0,32, 0 },
+{0,0,-32, 0 },
+{0,-32,32, 0 },
+{0,-32,0, 0 },
+{0,-32,-32, 0 },
+{-32,32,32, 0 },
+{-32,32,0, 0 },
+{-32,32,-32, 0 },
+{-32,0,32, 0 },
+{-32,0,0, 0 },
+{-32,0,-32, 0 },
+{-32,-32,32, 0 },
+{-32,-32,0, 0 },
+{-32,-32,-32, 0 }
 };
-std::vector<std::vector<std::vector<int> > > matrix(GRID_SIZE, std::vector<std::vector<int>>(GRID_SIZE, std::vector<int>(GRID_SIZE, 0)));
-FVector destCell;
+vector<vector<vector<int> > > matrix(GRID_SIZE, vector<vector<int>>(GRID_SIZE, vector<int>(GRID_SIZE, 0)));
+
+
+FIntVector4 destCell;
 
 // Sets default values
 AGridNav3D::AGridNav3D()
 {
 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
-	PrimaryActorTick.bCanEverTick = true;
+	PrimaryActorTick.bCanEverTick = false;
 
 }
 
@@ -144,6 +173,7 @@ bool AGridNav3D::initGrid()
 			}
 		}
 	}
+	UE_LOG(LogTemp, Warning, TEXT("Setting matrix - END"));
 	/*
 	for (int x = 0; x < GRID_SIZE; x++)
 		for (int y = 0; y < GRID_SIZE; y++)
@@ -156,6 +186,7 @@ bool AGridNav3D::initGrid()
 
 			}
 	*/
+
 	return true;
 }
 
@@ -164,26 +195,26 @@ TArray<FVector> AGridNav3D::getPath(FVector originWorld, FVector destinationWorl
 	//UE_LOG(LogTemp, Warning, TEXT("get Path INI"));
 	std::vector<std::vector<std::vector<bool> > > visited(GRID_SIZE, std::vector<std::vector<bool>>(GRID_SIZE, std::vector<bool>(GRID_SIZE, false)));
 	std::vector<std::vector<std::vector<FVector> > > previousCellLocation(GRID_SIZE, std::vector<std::vector<FVector>>(GRID_SIZE, std::vector<FVector>(GRID_SIZE)));
-	std::vector<std::vector<std::vector<FVector> > > previousCellLocationGrid(GRID_SIZE, std::vector<std::vector<FVector>>(GRID_SIZE, std::vector<FVector>(GRID_SIZE)));
-	//priority_queue<FVector4, vector<FVector4>, Compare> Q;
-	queue<FVector> Q;
-	FVector originCell = worldToGrid(originWorld);
+	std::vector<std::vector<std::vector<FIntVector4> > > previousCellLocationGrid(GRID_SIZE, std::vector<std::vector<FIntVector4>>(GRID_SIZE, std::vector<FIntVector4>(GRID_SIZE)));
+	priority_queue<FIntVector4, vector<FIntVector4>, Compare> Q;
+	//queue<FVector> Q;
+	FIntVector4 originCell = worldToGrid(originWorld);
 	destCell = worldToGrid(destinationWorld);
-	FVector nextCell, currentCell;
+	FIntVector4 nextCell, currentCell;
 	nextCell = worldToGrid(originWorld);
 	Q.push(nextCell);
 	bool done = false;
 	while (!Q.empty() && !done) {
-		//currentCell = Q.top();
-		currentCell = Q.front();
+		currentCell = Q.top();
+		//currentCell = Q.front();
 		Q.pop();
 		for (int i = DIRECTION_AMOUNT - 1; i >= 0; i--) {
-			nextCell = currentCell + DIRECTIONS[i];
-			if (isValid(currentCell, DIRECTIONS[i], visited)) {
+			nextCell = sum(currentCell,DIRECTIONS[i]);
+			if (isValid(nextCell, visited)) {
 				visited[nextCell.X][nextCell.Y][nextCell.Z] = true;
 				previousCellLocation[nextCell.X][nextCell.Y][nextCell.Z] = gridToWorld(currentCell);
 				previousCellLocationGrid[nextCell.X][nextCell.Y][nextCell.Z] = currentCell;
-				//nextCell.W = FVector::Distance(nextCell, destCell);
+				nextCell.W = distance(nextCell, destCell);
 				//nextCell.W = rand()%20;
 				Q.push(nextCell);
 			}
@@ -195,23 +226,36 @@ TArray<FVector> AGridNav3D::getPath(FVector originWorld, FVector destinationWorl
 		}
 	}
 	TArray<FVector> ret;
-	nextCell = destCell;
-	while (nextCell != originCell) {
+	nextCell = destCell;/*
+	while (done && (nextCell != originCell)) {
 		ret.Add(previousCellLocation[nextCell.X][nextCell.Y][nextCell.Z]);
-		//UE_LOG(LogTemp, Warning, TEXT("Step %9.6f %9.6f %9.6f"), previousCellLocation[nextCell.X][nextCell.Y][nextCell.Z].X, previousCellLocation[nextCell.X][nextCell.Y][nextCell.Z].Y, previousCellLocation[nextCell.X][nextCell.Y][nextCell.Z].Z);
+		UE_LOG(LogTemp, Warning, TEXT("Step %9.6f %9.6f %9.6f"), previousCellLocation[nextCell.X][nextCell.Y][nextCell.Z].X, previousCellLocation[nextCell.X][nextCell.Y][nextCell.Z].Y, previousCellLocation[nextCell.X][nextCell.Y][nextCell.Z].Z);
 		nextCell = previousCellLocationGrid[nextCell.X][nextCell.Y][nextCell.Z];
-	}
+	}*/
+	ret.Add(gridToWorld(destCell));
 	//UE_LOG(LogTemp, Warning, TEXT("get Path FIN"));
 	return ret;
 }
 
-
-bool AGridNav3D::isValid(FVector cell, FVector direction, std::vector<std::vector<std::vector<bool> > > &visited)
+FIntVector4 AGridNav3D::sum(FIntVector4 a, FIntVector4 b)
 {
-	FVector possibleCell = cell + direction;
-	if (possibleCell.X < 0 || possibleCell.X >= GRID_SIZE || possibleCell.Y < 0 || possibleCell.Y >= GRID_SIZE
-		|| possibleCell.Z < 0 || possibleCell.Z >= GRID_SIZE) return false;
-	return !visited[possibleCell.X][possibleCell.Y][possibleCell.Z];
+	a.X += b.X;
+	a.Y += b.Y;
+	a.Z += b.Z;
+	return a;
+}
+
+int AGridNav3D::distance(FIntVector4 a, FIntVector4 b)
+{
+	return (int)sqrt((a.X - b.X)*(a.X - b.X) + (a.Y - b.Y)*(a.Y - b.Y) + (a.Z - b.Z)*(a.Z - b.Z));
+}
+
+
+bool AGridNav3D::isValid(const FIntVector4 &cell, const std::vector<std::vector<std::vector<bool> > > &visited)
+{
+	if (cell.X < 0 || cell.X >= GRID_SIZE || cell.Y < 0 || cell.Y >= GRID_SIZE
+		|| cell.Z < 0 || cell.Z >= GRID_SIZE) return false;
+	return !visited[cell.X][cell.Y][cell.Z];
 }
 
 // Called when the game starts or when spawned
@@ -228,12 +272,17 @@ void AGridNav3D::Tick(float DeltaTime)
 
 }
 
-FVector AGridNav3D::worldToGrid(FVector worldPos) {
-	return FVector(floorf(worldPos.X / CELL_SIZE), floorf(worldPos.Y / CELL_SIZE), floorf(worldPos.Z / CELL_SIZE));
-}
 
-FVector AGridNav3D::gridToWorld(FVector gridPos) {
+FVector AGridNav3D::gridToWorld(FIntVector4 gridPos) {
 	return FVector(gridPos.X * CELL_SIZE, gridPos.Y * CELL_SIZE, gridPos.Z * CELL_SIZE);
 }
 
+FIntVector4 AGridNav3D::worldToGrid(FVector worldPos)
+{
+	FIntVector4 p;
+	p.X = (int)worldPos.X / CELL_SIZE;
+	p.Y = (int)worldPos.Y / CELL_SIZE;
+	p.Z = (int)worldPos.Z / CELL_SIZE;
+	return p;
+}
 

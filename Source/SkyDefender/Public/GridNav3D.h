@@ -24,11 +24,9 @@ public:
 	UPROPERTY(EditAnywhere)
 	int32 gridSize;
 
-	UFUNCTION(BlueprintCallable)
-	FVector worldToGrid(FVector worldPos);
+	FIntVector4 worldToGrid(FVector worldPos);
 
-	UFUNCTION(BlueprintCallable)
-	FVector gridToWorld(FVector gridPos);		
+	FVector gridToWorld(FIntVector4 gridPos);
 
 	UFUNCTION(BlueprintCallable)
 	bool initGrid();	
@@ -36,18 +34,22 @@ public:
 	UFUNCTION(BlueprintCallable)
 	TArray<FVector> getPath(FVector originWorld, FVector destinationWorld);
 
+	FIntVector4 sum(FIntVector4 a, FIntVector4 b);
+	int distance(FIntVector4 a, FIntVector4 b);
 
-	bool isValid(FVector cell, FVector direction, std::vector<std::vector<std::vector<bool> > > &visited);
+	bool isValid(const FIntVector4 &cell, const std::vector<std::vector<std::vector<bool> > > &visited);
 
 
 	class Compare
 	{
 	public:
-		bool operator() (const FVector4 &a, const FVector4 &b)
+		bool operator() (const FIntVector4 &a, const FIntVector4 &b)
 		{		
 			return a.W > b.W;
 		}
 	};
+
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
